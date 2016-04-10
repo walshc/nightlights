@@ -1,6 +1,5 @@
-
 # nightlights
-An `R` package to extract NOAA night lights data for regions within shapefiles/`SpatialPolygonsDataFrame`.
+An `R` package to extract NOAA night lights data for regions within shapefiles/`SpatialPolygonsDataFrame`. The night lights data can be downloaded from [http://ngdc.noaa.gov/eog/data/web_data/v4composites/](here). A download script is also provided (see below).
 
 ## Installation
         if (!require(devtools)) install.packages("devtools")
@@ -25,6 +24,8 @@ An `R` package to extract NOAA night lights data for regions within shapefiles/`
         5 2500334970      Lenox                2339.5                2661.0
 
 ## Download and Extraction Script
-To save time downloading and extracting all of the NOAA data manually I also provide a script which should work in the terminal on OS X and Linux. The script will ask which directory you want to save the night lights data to. Keep in mind the full data set is very large so you will need about 50GB of space to do this. You can choose to save it to an external drive if you wisu. The script can also be used from within R:
+To save time downloading and extracting all of the NOAA data manually I also provide a script (`download-and-extract-lights-data.sh`) which should work in the terminal on OS X and Linux. The script will ask which directory you want to save the night lights data to. Keep in mind the full data set is very large so you will need about 50GB of space to do this. You can choose to save it to an external drive if you wish. Paste the following commands in the terminal to get it started:
 
-        nightlights::downloadNightLights()
+        wget https://raw.githubusercontent.com/walshc/nightlights/master/download-and-extract-lights-data.sh
+        chmod +x download-and-extract-lights-data.sh
+        ./download-and-extract-lights-data.sh
