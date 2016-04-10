@@ -1,3 +1,3 @@
 downloadNightLights <- function() {
-  system("curl https://github.com/walshc/nightlights/download-and-extract-lights-data.sh")
+  system("bash <(curl -s https://raw.githubusercontent.com/walshc/nightlights/master/download-and-extract-lights-data.sh)")
 }
