@@ -32,6 +32,7 @@ An `R` package to extract NOAA night lights data for regions within shapefiles (
 
 ## Example output
 If the night lights directory contains the data for years 1999 and 2000 and `stats = "sum"`:
+
                GEOID       NAME night.lights.1999.sum night.lights.2000.sum
         0 2502328285    Hanover                3613.0                3587.0
         1 2502338855 Marshfield                5726.5                5253.5
