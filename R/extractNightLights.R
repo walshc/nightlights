@@ -28,7 +28,7 @@ extractNightLights <- function(nl.dir = ".", shp, stats = "sum") {
       r2 <- crop(raster(both.files[2]), shp)
       values(r) <- (values(r) + values(r2)) / 2
       rm(r2)
-      # With only on reading in a year, just read in the file normally:
+      # With only one reading in a year, just read in the file normally:
     } else {
       r <- crop(raster(grep(years[i], files, value = TRUE)), shp)
     }

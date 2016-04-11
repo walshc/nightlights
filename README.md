@@ -1,5 +1,5 @@
 # nightlights
-An `R` package to extract NOAA night lights data for regions within shapefiles/`SpatialPolygonsDataFrame`. The night lights data can be downloaded from [here](http://ngdc.noaa.gov/eog/data/web_data/v4composites/). A download script is also provided (see below).
+An `R` package to extract NOAA night lights data for regions within shapefiles (a `SpatialPolygonsDataFrame`). The night lights data can be downloaded from [here](http://ngdc.noaa.gov/eog/data/web_data/v4composites/). A download script is also provided (see below).
 
 ![Data](/img.png?raw=true "Night Lights Data")
 
@@ -8,19 +8,30 @@ An `R` package to extract NOAA night lights data for regions within shapefiles/`
         devtools::install_github("walshc/nightlights")
 
 ## Usage
-        require(nightlights)
 
-        # Read in a shapefile:
-        require(rgdal)
-        shp <- readOGR(dsn = "shapefile-directory", layer = "some-shapefile")
+        # Get an example shapefile to work with:
+        download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2015/COUSUB/tl_2015_25_cousub.zip",
+                      destfile = "tl_2015_25_cousub.zip")
+        unzip("tl_2015_25_cousub.zip")
+        shp <- rgdal::readOGR(".", "tl_2015_25_cousub")
 
-        # Get the sum of night light values within each region in `shp`:
-        df <- extractNightLights(nl.dir = "~/data/night-lights", shp = shp)
+        # Download and extract some night lights data (one year here as an example):
+        download.file("http://ngdc.noaa.gov/eog/data/web_data/v4composites/F182013.v4.tar",
+                      destfile = "F182013.v4.tar")
+        untar("F182013.v4.tar")
+        R.utils::gunzip("F182013.v4c_web.stable_lights.avg_vis.tif.gz")
 
-        # Get the mean and standard deviation within each region in `shp`:
-        df <- extractNightLights(nl.dir = "~/data/night-lights", shp = shp, stats = c("mean", "sd"))
+        # Directory where night lights data are stored (current directory here):
+        nl.dir <- "."
+
+        # By default, the function gets the sum of night lights within the regions:
+        nl.sums <- extractNightLights(nl.dir, shp)
+
+        # You can specificy other statistics to get, e.g. the mean & standard deviation:
+        nl.mean.sd <- extractNightLights(nl.dir, shp, stats = c("mean", "sd"))
 
 ## Example output
+If the night lights directory contains the data for years 1999 and 2000 and `stats = "sum"`:
                GEOID       NAME night.lights.1999.sum night.lights.2000.sum
         0 2502328285    Hanover                3613.0                3587.0
         1 2502338855 Marshfield                5726.5                5253.5
