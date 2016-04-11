@@ -21,6 +21,11 @@ extractNightLights(nl.dir = ".", shp, stats = c("sum"))
   night lights data for each year provided.}
 }
 \examples{
+q <- readline(prompt="Download shapefile and night lights data for example (about 500MB)? (Y/n)")
+if (q != "Y") {
+  stop("Aborted.")
+}
+
 # Get an example shapefile to work with:
 download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2015/COUSUB/tl_2015_25_cousub.zip",
               destfile = "tl_2015_25_cousub.zip")
