@@ -1,4 +1,4 @@
-extractNightLights <- function(nl.dir = ".", shp, stats = "sum") {
+extractNightLights <- function(directory = ".", shp, stats = "sum") {
   require(raster)
 
   if (class(shp) != "SpatialPolygonsDataFrame") {
@@ -7,7 +7,7 @@ extractNightLights <- function(nl.dir = ".", shp, stats = "sum") {
 
   orig.dir <- getwd()
 
-  setwd(nl.dir)
+  setwd(directory)
   files <- list.files(pattern = "*.tif")
   # Years in which this night lights data are available:
   years <- substr(files, 4, 7)  # The year is characters 4 to 9

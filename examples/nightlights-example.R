@@ -13,17 +13,12 @@ download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2015/COUSUB/tl_2015_25_cousu
 unzip("tl_2015_25_cousub.zip")
 shp <- rgdal::readOGR(".", "tl_2015_25_cousub")
 
-# Download and extract some night lights data (one year here as an example):
-download.file("http://ngdc.noaa.gov/eog/data/web_data/v4composites/F182013.v4.tar",
-              destfile = "F182013.v4.tar")
-untar("F182013.v4.tar")
-R.utils::gunzip("F182013.v4c_web.stable_lights.avg_vis.tif.gz")
-
-# Directory where night lights data are stored (current directory here):
-nl.dir <- "."
+# Download and extract some night lights data to a directory "night-lights":
+downloadNightLights(years = 1999:2000, directory = "night-lights")
 
 # By default, the function gets the sum of night lights within the regions:
-nl.sums <- extractNightLights(nl.dir, shp)
+nl.sums <- extractNightLights(directory = "night-lights", shp)
 
 # You can specificy other statistics to get, e.g. the mean & standard deviation:
-nl.mean.sd <- extractNightLights(nl.dir, shp, stats = c("mean", "sd"))
+nl.mean.sd <- extractNightLights(directory = "night-lights", shp,
+                                 stats = c("mean", "sd"))
