@@ -11,21 +11,24 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
   setwd(directory)
   files <- list.files(pattern = "*.tif$")
 
-  # If years is not provided, take everything in the directory:
-  if (is.null(years)) {
-    # Years in which this night lights data are available:
-    years <- as.numeric(substr(files, 4, 7))  # The year is characters 4 to 9
-  }
+  # Years in which this night lights data are available:
+  all.years <- as.numeric(substr(files, 4, 7))  # The year is characters 4 to 9
 
   # Need to average the years where there are two satellite readings:
-  double.years <- years[duplicated(years)]
-  years <- sort(unique(years))
+  double.years <- all.years[duplicated(all.years)]
+
+  # If years aren't provided, take all of them:
+  if (is.null(years)) {
+    years <- sort(unique(all.years))
+  }
 
   # Start the output data.frame:
   df <- shp@data
 
   for (i in seq_along(years)) {
+
     cat("Extracting night lights data for year ", years[i], "...", sep = "")
+
     # If there are two satellite readings in a year, average them first:
     if (years[i] %in% double.years) {
       both.files <- grep(years[i], files, value = TRUE)
@@ -33,15 +36,19 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
       r2 <- crop(raster(both.files[2]), shp)
       values(r) <- (values(r) + values(r2)) / 2
       rm(r2)
+
       # With only one reading in a year, just read in the file normally:
     } else {
       r <- crop(raster(grep(years[i], files, value = TRUE)), shp)
     }
+
     proj4string(r) <- proj4string(shp)
+
     for (j in stats) {
       extract <- extract(r, shp, fun = get(j), na.rm = TRUE)
       df[[paste0("night.lights.", years[i], ".", j)]] <- c(extract)
     }
+
     cat("Done\n")
   }
   setwd(orig.dir)
