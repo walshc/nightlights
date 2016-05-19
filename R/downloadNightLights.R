@@ -24,7 +24,9 @@ downloadNightLights <- function(years, extract = TRUE, directory = NULL) {
     download.file(paste0(root.url, i), destfile = i)
     if (extract) {
       untar(i)
-      gz <- paste0(gsub(".tar", "", i), "v4c_web.stable_lights.avg_vis.tif.gz")
+      all.files <- list.files()
+      gz <- all.files[grepl(gsub(".tar", "", i), all.files) &
+                      grepl("web.avg_vis.tif.gz", all.files)]
       R.utils::gunzip(gz)
     }
   }
