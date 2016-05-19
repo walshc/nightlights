@@ -5,7 +5,7 @@
   SpatialPolygonsDataFrame. For years with two different satellite readings, it
   first takes the average between the two years.}
 \usage{
-extractNightLights(directory = ".", shp, stats = c("sum"))
+extractNightLights(directory = ".", shp, stats = c("sum"), years = NULL)
 }
 \arguments{
 \item{directory}{The directory the night lights data is stored in. The files
@@ -15,6 +15,8 @@ extractNightLights(directory = ".", shp, stats = c("sum"))
 \item{shp}{The \code{SpatialPolygonsDataFrame} to extract data from.}
 \item{stats}{A vector of functions to apply to the data within each region, for
   example \code{c("sum", "mean", "sd")}. The default is \code{"sum"}.}
+\item{years}{If provided, will only extract night lights data for those years.
+  By default it will extract all years in the directory.}
 }
 \value{
   Returns a \code{data.frame} with \code{shp@data} combined with the extracted

@@ -1,4 +1,5 @@
-extractNightLights <- function(directory = ".", shp, stats = "sum") {
+extractNightLights <- function(directory = ".", shp, stats = "sum",
+                               years = NULL) {
   require(raster)
 
   if (class(shp) != "SpatialPolygonsDataFrame") {
@@ -8,9 +9,13 @@ extractNightLights <- function(directory = ".", shp, stats = "sum") {
   orig.dir <- getwd()
 
   setwd(directory)
-  files <- list.files(pattern = "*.tif")
-  # Years in which this night lights data are available:
-  years <- substr(files, 4, 7)  # The year is characters 4 to 9
+  files <- list.files(pattern = "*.tif$")
+
+  # If years is not provided, take everything in the directory:
+  if (is.null(years)) {
+    # Years in which this night lights data are available:
+    years <- as.numeric(substr(files, 4, 7))  # The year is characters 4 to 9
+  }
 
   # Need to average the years where there are two satellite readings:
   double.years <- years[duplicated(years)]
