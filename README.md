@@ -1,6 +1,6 @@
 # nightlights
 An `R` package to extract NOAA night lights data for regions within shapefiles
-(a `SpatialPolygonsDataFrame`). The night lights data can be downloaded from
+(a `SpatialPolygons` or `SpatialPolygonsDataFrame`). The night lights data can be downloaded from
 [here](http://ngdc.noaa.gov/eog/data/web_data/v4composites/) or using the
 function `downloadNightLights()` in the package. Alternatively, a download
 script is provided to download and extract all the data (see below).

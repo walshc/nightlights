@@ -2,8 +2,8 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
                                years = NULL) {
   require(raster)
 
-  if (class(shp) != "SpatialPolygonsDataFrame") {
-    stop("'shp' must be a SpatialPolygonsDataFrame")
+  if (!class(shp) %in% c("SpatialPolygons", "SpatialPolygonsDataFrame")) {
+    stop("'shp' must be either a SpatialPolygons or SpatialPolygonsDataFrame")
   }
 
   orig.dir <- getwd()
@@ -23,7 +23,11 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
   }
 
   # Start the output data.frame:
-  df <- shp@data
+  if (class(shp) == "SpatialPolygons") {
+    df <- data.frame(id = 1:length(shp@polygons))
+  } else if (class(shp) == "SpatialPolygonsDataFrame") {
+    df <- shp@data
+  }
 
   for (i in seq_along(years)) {
 

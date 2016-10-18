@@ -1,7 +1,7 @@
 \name{extractNightLights}
 \alias{extractNightLights}
 \title{Extract Night Lights data from regions in a shapefile}
-\description{Extract NOAA night lights data for regions in a
+\description{Extract NOAA night lights data for regions in a SpatialPolygons or
   SpatialPolygonsDataFrame. For years with two different satellite readings, it
   first takes the average between the two years.}
 \usage{
@@ -12,7 +12,8 @@ extractNightLights(directory = ".", shp, stats = c("sum"), years = NULL)
   must be extracted to TIFF format and the filenames must not have been
   changed.  Other TIFF files in the same directory will probably cause
   problems. The default value for \code{nl.dir} is the current directory.}
-\item{shp}{The \code{SpatialPolygonsDataFrame} to extract data from.}
+\item{shp}{The \code{SpatialPolygons} or \code{SpatialPolygonsDataFrame} to
+  extract data from.}
 \item{stats}{A vector of functions to apply to the data within each region, for
   example \code{c("sum", "mean", "sd")}. The default is \code{"sum"}.}
 \item{years}{If provided, will only extract night lights data for those years.
