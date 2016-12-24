@@ -20,7 +20,7 @@ cd tar-files
 # Download each file from:
 # "Average Visible, Stable Lights, & Cloud Free Coverages."
 wget -A "*.tar" -m -p -E -k -K -np -erobots=off \
-     http://ngdc.noaa.gov/eog/data/web_data/v4composites/
+     https://ngdc.noaa.gov/eog/data/web_data/v4composites/
 
 mv ngdc.noaa.gov/eog/data/web_data/v4composites/*.tar .
 rm -rf ngdc.noaa.gov
