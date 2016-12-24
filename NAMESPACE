@@ -1,2 +1,3 @@
+import(raster)
 export(extractNightLights)
 export(downloadNightLights)
