@@ -49,7 +49,7 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
     proj4string(r) <- proj4string(shp)
 
     for (j in stats) {
-      extract <- extract(r, shp, fun = get(j), na.rm = TRUE)
+      extract <- raster::extract(r, shp, fun = get(j), na.rm = TRUE)
       df[[paste0("night.lights.", years[i], ".", j)]] <- c(extract)
     }
 
