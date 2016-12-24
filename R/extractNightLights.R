@@ -6,6 +6,9 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
     stop("'shp' must be either a SpatialPolygons or SpatialPolygonsDataFrame")
   }
 
+  crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
+  shp <- sp::spTransform(shp, sp::CRS(crs))
+
   orig.dir <- getwd()
 
   setwd(directory)
@@ -45,8 +48,6 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
     } else {
       r <- crop(raster(grep(years[i], files, value = TRUE)), shp)
     }
-
-    proj4string(r) <- proj4string(shp)
 
     for (j in stats) {
       extract <- raster::extract(r, shp, fun = get(j), na.rm = TRUE)

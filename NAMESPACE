@@ -1,3 +1,4 @@
 import(raster)
+import(sp)
 export(extractNightLights)
 export(downloadNightLights)
