@@ -21,7 +21,7 @@ downloadNightLights <- function(years, extract = TRUE, directory = NULL) {
 
   files <- paste0(files[substr(files, 4, 7) %in% years], ".v4.tar")
   for (i in files) {
-    download.file(paste0(root.url, i), destfile = i)
+    download.file(paste0(root.url, i), destfile = i, method = "wget")
     if (extract) {
       untar(i)
       all.files <- list.files()

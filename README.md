@@ -19,7 +19,7 @@ devtools::install_github("walshc/nightlights")
 ```r
 require(nightlights)
 
-# Get an example shapefile to work with:
+# Download, extract and load and example shapefile to work with (US counties):
 download.file("ftp://ftp2.census.gov/geo/tiger/TIGER2015/COUSUB/tl_2015_25_cousub.zip",
               destfile = "tl_2015_25_cousub.zip")
 unzip("tl_2015_25_cousub.zip")
@@ -48,8 +48,6 @@ If the night lights directory contains the data for years 1999 and 2000 and `sta
         5 2500334970      Lenox                2339.5                2661.0
 
 ## Script to download and extract all the data
-Instead of downloading all the data using the `downloadNightLights()` function, I also provide a script (`download-and-extract-lights-data.sh`) which should work in the terminal on OS X and Linux. The script will ask which directory you want to save the night lights data to. Keep in mind the full data set is very large so you will need about 50GB of space to do this. You can choose to save it to an external drive if you wish. Paste the following commands in the terminal to get it started:
+Instead of downloading all the data using the `downloadNightLights()` function, I also provide a script (`download-and-extract-lights-data.sh`) which should work in the terminal on OS X and Linux. The script will ask which directory you want to save the night lights data to. Keep in mind the full data set is very large so you will need about 50GB of space to do this. You can choose to save it to an external drive if you wish. Paste the following command into the terminal to get it started:
 
-        wget https://raw.githubusercontent.com/walshc/nightlights/master/download-and-extract-lights-data.sh
-        chmod +x download-and-extract-lights-data.sh
-        ./download-and-extract-lights-data.sh
+        curl https://raw.githubusercontent.com/walshc/nightlights/master/download-and-extract-lights-data.sh | bash
