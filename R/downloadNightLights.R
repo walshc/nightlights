@@ -1,6 +1,6 @@
 downloadNightLights <- function(years, extract = TRUE, directory = NULL) {
 
-  root.url <- "https://ngdc.noaa.gov/eog/data/web_data/v4composites/"
+  root.url <- "https://www.ngdc.noaa.gov/eog/data/web_data/v4composites/"
   orig.dir <- getwd()
 
   if (any(years > 2013) | any(years < 1992)) {
@@ -8,7 +8,7 @@ downloadNightLights <- function(years, extract = TRUE, directory = NULL) {
   }
 
   if (!is.null(directory)) {
-    dir.create(directory)
+    dir.create(directory, showWarnings = FALSE)
     setwd(directory)
   }
 
@@ -21,13 +21,18 @@ downloadNightLights <- function(years, extract = TRUE, directory = NULL) {
 
   files <- paste0(files[substr(files, 4, 7) %in% years], ".v4.tar")
   for (i in files) {
-    download.file(paste0(root.url, i), destfile = i, method = "wget")
+    download.file(paste0(root.url, i), destfile = i, method = "wget",
+                  extra = "--no-check-certificate")
     if (extract) {
       untar(i)
+      file.remove(i)
       all.files <- list.files()
       gz <- all.files[grepl(gsub(".tar", "", i), all.files) &
-                      grepl("web.avg_vis.tif.gz", all.files)]
-      R.utils::gunzip(gz)
+                      grepl("web.stable_lights.avg_vis.tif.gz", all.files)]
+      R.utils::gunzip(gz, overwrite = TRUE)
+      file.remove(grep("tif.gz$", list.files(), value = TRUE))
+      file.remove(grep("web.avg_vis.tfw", list.files(), value = TRUE))
+      file.remove(grep("web.cf_cvg.tfw", list.files(), value = TRUE))
     }
   }
   setwd(orig.dir)
