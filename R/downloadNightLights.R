@@ -1,6 +1,6 @@
 downloadNightLights <- function(years, extract = TRUE, directory = NULL) {
 
-  root.url <- "http://ngdc.noaa.gov/eog/data/web_data/v4composites/"
+  root.url <- "https://ngdc.noaa.gov/eog/data/web_data/v4composites/"
   orig.dir <- getwd()
 
   if (any(years > 2013) | any(years < 1992)) {
