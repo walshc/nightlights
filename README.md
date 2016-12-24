@@ -50,4 +50,6 @@ If the night lights directory contains the data for years 1999 and 2000 and `sta
 ## Script to download and extract all the data
 Instead of downloading all the data using the `downloadNightLights()` function, I also provide a script (`download-and-extract-lights-data.sh`) which should work in the terminal on OS X and Linux. The script will ask which directory you want to save the night lights data to. Keep in mind the full data set is very large so you will need about 50GB of space to do this. You can choose to save it to an external drive if you wish. Paste the following command into the terminal to get it started:
 
-        curl https://raw.githubusercontent.com/walshc/nightlights/master/download-and-extract-lights-data.sh | bash
+```bash
+curl https://raw.githubusercontent.com/walshc/nightlights/master/download-and-extract-lights-data.sh | bash
+```
