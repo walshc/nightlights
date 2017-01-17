@@ -2,10 +2,6 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
                                years = NULL) {
   require(raster)
 
-  if (!class(shp) %in% c("SpatialPolygons", "SpatialPolygonsDataFrame")) {
-    stop("'shp' must be either a SpatialPolygons or SpatialPolygonsDataFrame")
-  }
-
   crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   shp <- sp::spTransform(shp, sp::CRS(crs))
 
