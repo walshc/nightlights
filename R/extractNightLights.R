@@ -2,6 +2,12 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
                                years = NULL) {
   require(raster)
 
+  if (!class(shp) %in% c("SpatialPolygons", "SpatialPolygonsDataFrame",
+                         "SpatialPointsDataFrame")) {
+    stop(paste("'shp' must be either a SpatialPolygons",
+               "SpatialPolygonsDataFrame or SpatialPointsDataFrame"))
+  }
+
   crs <- "+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"
   shp <- sp::spTransform(shp, sp::CRS(crs))
 
@@ -25,7 +31,9 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
   if (class(shp) == "SpatialPolygons") {
     df <- data.frame(id = 1:length(shp@polygons))
   } else if (class(shp) == "SpatialPolygonsDataFrame") {
-    df <- shp@data
+    df <- data.frame(shp@data)
+  } else if (class(shp) == "SpatialPointsDataFrame") {
+    df <- data.frame(shp@data)
   }
 
   for (i in seq_along(years)) {
@@ -35,14 +43,14 @@ extractNightLights <- function(directory = ".", shp, stats = "sum",
     # If there are two satellite readings in a year, average them first:
     if (years[i] %in% double.years) {
       both.files <- grep(years[i], files, value = TRUE)
-      r  <- crop(raster(both.files[1]), shp)
-      r2 <- crop(raster(both.files[2]), shp)
+      r  <- crop(raster(both.files[1]), shp, snap = "out")
+      r2 <- crop(raster(both.files[2]), shp, snap = "out")
       values(r) <- (values(r) + values(r2)) / 2
       rm(r2)
 
       # With only one reading in a year, just read in the file normally:
     } else {
-      r <- crop(raster(grep(years[i], files, value = TRUE)), shp)
+      r <- crop(raster(grep(years[i], files, value = TRUE)), shp, snap = "out")
     }
 
     for (j in stats) {
