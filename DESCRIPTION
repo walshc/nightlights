@@ -8,6 +8,7 @@ Maintainer: Christoph Walsh <walshcb@bu.edu>
 Depends:
     R (>= 2.15.0)
 Imports:
-    raster
+    raster,
+    R.utils
 License: GPL-3
 URL: https://github.com/walshc/nightlights
