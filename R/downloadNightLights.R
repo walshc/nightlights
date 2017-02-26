@@ -1,4 +1,5 @@
-downloadNightLights <- function(years, extract = TRUE, directory = NULL) {
+downloadNightLights <- function(years, extract = TRUE, directory = NULL,
+                                download.method = "auto", ...) {
 
   root.url <- "https://www.ngdc.noaa.gov/eog/data/web_data/v4composites/"
   orig.dir <- getwd()
@@ -21,13 +22,8 @@ downloadNightLights <- function(years, extract = TRUE, directory = NULL) {
 
   files <- paste0(files[substr(files, 4, 7) %in% years], ".v4.tar")
   for (i in files) {
-    if (grepl("min", version$os)) {
-      download.file(paste0(root.url, i), destfile = i, method = "wget",
-                    extra = "--no-check-certificate")
-    } else {
-      download.file(paste0(root.url, i), destfile = i, method = "wget",
-                    extra = "--no-check-certificate")
-    }
+    download.file(paste0(root.url, i), destfile = i,
+                  method = download.method, ...)
     if (extract) {
       untar(i)
       file.remove(i)
